@@ -1,0 +1,142 @@
+.footer {
+  color: #ffffff;
+  width: 100%;
+  margin-top: auto; 
+}
+
+.footerContainer {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+}
+
+.footerTop {
+  background: #6a1b9a;
+  padding: 2rem 0;
+}
+
+.footerGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+}
+
+.footerCol h4 {
+  margin: 0 0 0.8rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.footerCol ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerCol li + li {
+  margin-top: 0.5rem;
+}
+
+.footerCol a {
+  color: #fffdfd;
+  font-size: 0.92rem;
+}
+
+.footerCol a:hover {
+  text-decoration: underline;
+}
+
+.footerBrand {
+  text-align: left;
+}
+
+.footerLogoName {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #c2c04d;
+  line-height: 1.05;
+}
+
+.footerLogoSub {
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.footerBottom {
+  background: #ffffff;
+  border-top: 1px solid #e3e3e3;
+  padding: 1rem 0;
+}
+
+.footerBottomRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.footerGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.footerGroupName {
+  font-weight: 800;
+  font-size: 1.1rem;
+  line-height: 1.1;
+  color: #212529;
+}
+
+.footerCopyright {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: #6b6b6b;
+}
+
+.footerLegal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.footerLegal a {
+  color: #2e6fbf;
+  font-size: 0.8rem;
+}
+
+.footerLegal a:hover {
+  text-decoration: underline;
+}
+
+.footerSep {
+  color: #b6b6b6;
+  font-size: 0.8rem;
+}
+
+@media (min-width: 576px) {
+  .footerGrid {
+    grid-template-columns: repeat(4, 1fr);
+    align-items: start;
+  }
+
+  .footerBrand {
+    text-align: right;
+    justify-self: end;
+  }
+
+  .footerBottomRow {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footerLegal {
+    justify-content: flex-end;
+  }
+}
