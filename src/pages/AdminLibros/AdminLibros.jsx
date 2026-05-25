@@ -39,12 +39,12 @@ function AdminLibros({ usuarioLogueado, alCerrarSesion }) {
     "Policial", "Biografía", "Historia"
   ];
 
-  // Obtener libros desde la API C#
+  // Obtener libros desde la API C# (Cambiado a Puerto 5224)
   const obtenerLibros = async () => {
     try {
       const url = busqueda.trim() 
-        ? `https://localhost:7201/api/Libros/buscar?q=${encodeURIComponent(busqueda.trim())}`
-        : 'https://localhost:7201/api/Libros';
+        ? `http://localhost:5224/api/Libros/buscar?q=${encodeURIComponent(busqueda.trim())}`
+        : 'http://localhost:5224/api/Libros';
         
       const response = await fetch(url);
       if (response.ok) {
@@ -70,10 +70,10 @@ function AdminLibros({ usuarioLogueado, alCerrarSesion }) {
     });
   };
 
-  // Guardar o Editar un libro (Modal Verde)
+  // Guardar o Editar un libro (Cambiado a Puerto 5224)
   const manejarGuardar = async (e) => {
     e.preventDefault();
-    const url = editando ? `https://localhost:7201/api/Libros/${form.id}` : 'https://localhost:7201/api/Libros';
+    const url = editando ? `http://localhost:5224/api/Libros/${form.id}` : 'http://localhost:5224/api/Libros';
     const metodo = editando ? 'PUT' : 'POST';
 
     try {
@@ -113,12 +113,12 @@ function AdminLibros({ usuarioLogueado, alCerrarSesion }) {
     });
   };
 
-  // Segundo paso de borrado: Ejecuta la petición DELETE real al dar clic en "Eliminar"
+  // Segundo paso de borrado: Petición DELETE (Cambiado a Puerto 5224)
   const confirmarEliminacion = async () => {
     if (!idLibroAEliminar) return;
 
     try {
-      const response = await fetch(`https://localhost:7201/api/Libros/${idLibroAEliminar}`, { 
+      const response = await fetch(`http://localhost:5224/api/Libros/${idLibroAEliminar}`, { 
         method: 'DELETE' 
       });
 
@@ -256,6 +256,7 @@ function AdminLibros({ usuarioLogueado, alCerrarSesion }) {
           </form>
         </section>
 
+        {/* LISTADO DE LIBROS */}
         <section className="admin-card">
           <div className="cardTitle d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div>
