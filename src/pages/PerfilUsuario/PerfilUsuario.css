@@ -1,0 +1,301 @@
+/* PROFILE PAGE */
+.profile-page {
+  min-height: calc(100vh - 72px);
+}
+
+.profile-sidebar,
+.profile-card,
+.book-card,
+.stat-card {
+  background-color: #ffffff;
+  border: 1px solid #eadcf4;
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 28px rgba(106, 27, 154, 0.07);
+}
+
+.profile-sidebar {
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.sidebar-user {
+  text-align: center;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #efe3f7;
+  margin-bottom: 1rem;
+}
+
+.sidebar-avatar,
+.profile-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6a1b9a 0%, #8e44ad 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 0 auto 1rem;
+}
+
+.sidebar-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: #6a1b9a;
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+}
+
+.sidebar-username {
+  color: #6c757d;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.role-badge {
+  display: inline-block;
+  background-color: #f6ecfb;
+  color: #6a1b9a;
+  border: 1px solid #ddc5ee;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.sidebar-link {
+  text-decoration: none;
+  color: #3c2a46;
+  font-weight: 600;
+  padding: 0.9rem 1rem;
+  border-radius: 0.9rem;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-link:hover,
+.sidebar-link:focus {
+  background-color: #f6ecfb;
+  color: #6a1b9a;
+  transform: translateX(2px);
+}
+
+.sidebar-link.active {
+  background-color: #6a1b9a;
+  color: #ffffff;
+}
+
+.logout-link {
+  color: #b02a37;
+}
+
+.logout-link:hover,
+.logout-link:focus {
+  background-color: #fff1f2;
+  color: #b02a37;
+}
+
+/* PROFILE CARD */
+.profile-card {
+  padding: 1.25rem;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+  margin: 0;
+  width: 96px;
+  height: 96px;
+}
+
+.profile-kicker {
+  color: #e67e22;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.82rem;
+}
+
+.profile-title {
+  font-family: 'Playfair Display', serif;
+  color: #6a1b9a;
+  font-size: 1.9rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.profile-subtitle {
+  color: #5c6670;
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+.profile-data-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.info-box {
+  background-color: #fcf9fe;
+  border: 1px solid #efe3f7;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.info-box h3 {
+  font-size: 0.9rem;
+  margin: 0 0 0.55rem;
+  color: #6a1b9a;
+  font-weight: 700;
+}
+
+.info-box p {
+  margin: 0;
+  color: #212529;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.profile-description-block {
+  margin-top: 1.5rem;
+}
+
+.section-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.section-title-custom {
+  font-family: 'Playfair Display', serif;
+  color: #6a1b9a;
+  font-size: 1.55rem;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.section-text,
+.profile-description {
+  color: #5c6670;
+  line-height: 1.8;
+  font-size: 0.97rem;
+}
+
+/* BOOKS */
+.book-card {
+  overflow: hidden;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.book-card-link:hover .book-card,
+.book-card-link:focus .book-card {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1);
+}
+
+.book-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.empty-books-profile {
+  background: #ffffff;
+  border: 1px solid #eadcf4;
+  border-radius: 1rem;
+  padding: 1rem;
+  color: #6c757d;
+  text-align: center;
+  box-shadow: 0 12px 28px rgba(106, 27, 154, 0.07);
+}
+
+.book-body {
+  padding: 1rem;
+}
+
+.book-title {
+  font-size: 1rem;
+  margin: 0 0 0.35rem;
+  color: #4a235a;
+  font-weight: 700;
+}
+
+.book-meta {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.92rem;
+}
+
+/* STATS */
+.stat-card {
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  color: #6a1b9a;
+  font-weight: 800;
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+
+.stat-label {
+  color: #5c6670;
+  font-size: 0.95rem;
+}
+
+/* MEDIA QUERIES */
+@media (min-width: 576px) {
+  .profile-card,
+  .profile-sidebar {
+    padding: 1.5rem;
+  }
+  .profile-title {
+    font-size: 2.35rem;
+  }
+  .profile-data-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .profile-header {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .profile-main-info {
+    flex: 1;
+  }
+  .profile-card,
+  .profile-sidebar {
+    padding: 2rem;
+  }
+  .profile-data-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .book-image {
+    height: 280px;
+  }
+}
