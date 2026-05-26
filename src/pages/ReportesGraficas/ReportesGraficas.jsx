@@ -34,11 +34,21 @@ function ReportesGraficas({ usuarioLogueado }) {
             conteoCategorias[cat] = (conteoCategorias[cat] || 0) + 1;
           });
 
+          // Convertimos el objeto de conteos en un arreglo inicial de objetos
           const formatearPastel = Object.keys(conteoCategorias).map(cat => ({
             name: cat,
             value: conteoCategorias[cat]
           }));
-          setDatosPastel(formatearPastel);
+
+          // 🔥 NUEVO CAMBIO: Filtrado para mostrar solo las 5 categorías con más libros
+          // .sort((a, b) => b.value - a.value) ordena el arreglo de mayor a menor cantidad
+          // .slice(0, 5) toma únicamente los primeros 5 elementos de la lista ordenada
+          const top5Categorias = formatearPastel
+            .sort((a, b) => b.value - a.value)
+            .slice(0, 5);
+
+          // Guardamos las 5 mejores categorías filtradas en el estado de la gráfica
+          setDatosPastel(top5Categorias);
         }
       } catch (error) {
         console.error("Error al cargar libros para reportes:", error);
@@ -48,19 +58,19 @@ function ReportesGraficas({ usuarioLogueado }) {
     cargarDatos();
   }, []);
 
-  // 3. Simular o cargar el historial de tiempo cada vez que cambie el libro seleccionado
+// 3. Simular o cargar el historial de tiempo cada vez que cambie el libro seleccionado
   useEffect(() => {
     if (!libroSeleccionado) return;
     
     // Generamos datos aleatorios lógicos basados en el ID del libro para que cambie la gráfica
     const factor = parseInt(libroSeleccionado) % 3;
+    
     const historialSimulado = [
       { mes: 'Ene', solicitudes: 2 + factor },
       { mes: 'Feb', solicitudes: 5 * (factor + 1) },
       { mes: 'Mar', solicitudes: 12 - factor },
       { mes: 'Abr', solicitudes: 8 + factor * 2 },
-      { mes: 'May', solicitudes: 15 + factor }, // Picos en mayo por exámenes del ITSUR
-      { mes: 'Jun', solicitudes: 3 }
+      { mes: 'May', solicitudes: 18 + factor } // Pico más alto de solicitudes por fin de semestre en el ITSUR
     ];
 
     setDatosLineas(historialSimulado);
@@ -103,7 +113,8 @@ function ReportesGraficas({ usuarioLogueado }) {
           {/* GRÁFICA 1: PASTEL - CATEGORÍAS */}
           <section className="admin-card grafica-box">
             <div className="cardTitle">
-              <h2>Libros por Categoría</h2>
+              {/* Ajustamos el título para dejar claro que solo muestra las más populares */}
+              <h2>Top 5 Categorías más Populares</h2>
             </div>
             <div className="canvas-wrap">
               <ResponsiveContainer width="100%" height={300}>

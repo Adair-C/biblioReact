@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
 import Navbar from './components/Navbar/Navbar.jsx';
 import Footer from './components/Footer/Footer.jsx'
+
 import ReportesGraficas from './pages/ReportesGraficas/ReportesGraficas';
 import AdminPrestamos from './pages/AdminPrestamos/AdminPrestamos';
-
 import Login from './pages/Login/Login';
 import Principal from './pages/principal/Principal.jsx'
 import AdminLibros from './pages/AdminLibros/AdminLibros';
+import PerfilUsuario from './pages/PerfilUsuario/PerfilUsuario.jsx'
 
 function App() {
   const [isLogged, setIsLogged] = useState(() => {
@@ -44,24 +46,23 @@ function App() {
       )}
       <Routes>
         {!isLogged ? (
-          // Si no está logueado, solo puede ir al Login
+          
           <Route path="*" element={<Login alLoguearCorrectamente={alLoguearCorrectamente} />} />
         ) : (
-          // Si está logueado, estas son sus rutas disponibles
+         
           <>
             <Route path="/Inicio" element={<Principal usuarioLogueado={usuarioLogueado} />} />
             <Route path="/libros" element={<AdminLibros usuarioLogueado={usuarioLogueado} />} />
             <Route path="/reportes" element={<ReportesGraficas usuarioLogueado={usuarioLogueado} />} />
             <Route path="/prestamos" element={<AdminPrestamos usuarioLogueado={usuarioLogueado} />} />
-            
-            {/* Ejemplo de vista de alumno */}
-            <Route path="/catalogo" element={
+            <Route path="/Perfil" element={<PerfilUsuario usuarioLogueado={usuarioLogueado} />} />
+
+            {/* <Route path="/catalogo" element={
                <div style={{ padding: '40px', textAlign: 'center' }}>
                  <h2>Vista del Alumno</h2>
                </div>
-            } />
+            } /> */}
             
-            {/* Redirección por defecto si escribe una ruta que no existe */}
             <Route path="*" element={<Navigate to="/Inicio" />} />
           </>
         )}

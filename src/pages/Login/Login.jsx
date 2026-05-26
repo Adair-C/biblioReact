@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Password from '../../components/Password/Password';
-import Footer from '../../components/Footer/Footer'; 
 import './Login.css';
 
 function Login({ alLoguearCorrectamente }) {
@@ -16,7 +15,6 @@ function Login({ alLoguearCorrectamente }) {
     setError(false);
 
     try {
-      /* 🔥 CAMBIO AQUÍ: Cambiado a http://localhost:5224 para evitar problemas con SSL */
       const response = await fetch('http://localhost:5224/api/Auth/login', {
         method: 'POST',
         headers: {

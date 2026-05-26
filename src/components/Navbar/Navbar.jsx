@@ -16,15 +16,9 @@ function Navbar({ usuarioLogueado, alCerrarSesion }) {
         <div className="nav-center">
             <ul className="nav-links">
               <li><NavLink to="/inicio">Inicio</NavLink></li>
-              
-              {/* Solo Admin y Maestro pueden gestionar libros */}
               {(esAdmin || esMaestro) && (<li><NavLink to="/libros">Gestionar Libros</NavLink></li>)}
-              
-              <li><NavLink to="/prestamos">Gestionar Prestamos</NavLink></li>
-              
-              {/* 🔥 CAMBIO AQUÍ: Cambiado a /reportes y protegido para que solo lo vea Admin o Maestro */}
+              {(esAdmin || esMaestro) && (<li><NavLink to="/prestamos">Gestionar Prestamos</NavLink></li>)}
               {(esAdmin || esMaestro) && (<li><NavLink to="/reportes">Estadísticas</NavLink></li>)}
-              
               <li><NavLink to="/perfil">Mi perfil</NavLink></li>
             </ul>
         </div>
