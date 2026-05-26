@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Footer from './components/Footer/Footer.jsx'
 import ReportesGraficas from './pages/ReportesGraficas/ReportesGraficas';
+import AdminPrestamos from './pages/AdminPrestamos/AdminPrestamos';
 
 import Login from './pages/Login/Login';
 import Principal from './pages/principal/Principal.jsx'
@@ -51,6 +52,7 @@ function App() {
             <Route path="/Inicio" element={<Principal usuarioLogueado={usuarioLogueado} />} />
             <Route path="/libros" element={<AdminLibros usuarioLogueado={usuarioLogueado} />} />
             <Route path="/reportes" element={<ReportesGraficas usuarioLogueado={usuarioLogueado} />} />
+            <Route path="/prestamos" element={<AdminPrestamos usuarioLogueado={usuarioLogueado} />} />
             
             {/* Ejemplo de vista de alumno */}
             <Route path="/catalogo" element={
