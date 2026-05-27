@@ -1,11 +1,11 @@
-import './principal.css'; // Tu archivo CSS original
+import './principal.css';
+import CategoriaItem from '../../components/Cprincipal/CategoriaItem';
 
 function Principal({ usuarioLogueado }) {
   const estaLogueado = !!usuarioLogueado;
 
   return (
     <>
-      {/* BANNER */}
       <section className="banner d-flex align-items-center justify-content-center text-center">
         <div className="banner-overlay"></div>
         <div className="container banner-content position-relative">
@@ -18,7 +18,6 @@ function Principal({ usuarioLogueado }) {
         </div>
       </section>
 
-      {/* SECCIÓN CATEGORÍAS */}
       <section className="categories-section py-5">
         <div className="container">
           <div className="row justify-content-center">
@@ -36,26 +35,12 @@ function Principal({ usuarioLogueado }) {
           </div>
 
           <div className="row g-4">
-            {/* Aquí puedes mapear un array de categorías para no repetir tanto HTML */}
             <CategoriaItem titulo="Novela negra, thriller o suspense." img="../../assets/principal/thriller.jpg" />
             <CategoriaItem titulo="Novela histórica." img="historica.jpg" />
-            {/* ... resto de categorías */}
           </div>
         </div>
       </section>
     </>
-  );
-}
-
-// Sub-componente para limpiar el código de las tarjetas
-function CategoriaItem({ titulo, img }) {
-  return (
-    <div className="col-12 col-sm-6">
-      <article className="category-card h-100">
-        <img src={`img/index/${img}`} alt={titulo} className="img-fluid category-image" />
-        <h3 className="category-title">{titulo}</h3>
-      </article>
-    </div>
   );
 }
 

@@ -52,7 +52,7 @@ function Login({ alLoguearCorrectamente }) {
 
           <form onSubmit={manejarLogin} className="form">
             <div className="field">
-              <span>Usuario / Correo</span>
+              <span>Correo</span>
               <input 
                 type="text" 
                 placeholder="ejemplo@itsur.com" 
@@ -83,7 +83,6 @@ function Login({ alLoguearCorrectamente }) {
           </form>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

@@ -56,18 +56,12 @@ function App() {
             <Route path="/reportes" element={<ReportesGraficas usuarioLogueado={usuarioLogueado} />} />
             <Route path="/prestamos" element={<AdminPrestamos usuarioLogueado={usuarioLogueado} />} />
             <Route path="/Perfil" element={<PerfilUsuario usuarioLogueado={usuarioLogueado} />} />
-
-            {/* <Route path="/catalogo" element={
-               <div style={{ padding: '40px', textAlign: 'center' }}>
-                 <h2>Vista del Alumno</h2>
-               </div>
-            } /> */}
             
             <Route path="*" element={<Navigate to="/Inicio" />} />
           </>
         )}
       </Routes>
-      {isLogged && <Footer />}
+      <Footer />
     </BrowserRouter>
   );
 }

@@ -9,13 +9,11 @@ function ReportesGraficas({ usuarioLogueado }) {
   const [libroSeleccionado, setLibroSeleccionado] = useState('');
   const [datosPastel, setDatosPastel] = useState([]);
   const [datosLineas, setDatosLineas] = useState([]);
-  const reporteRef = useRef(); // Referencia para capturar la pantalla y exportar a PDF
+  const reporteRef = useRef();
 
-  // Colores estéticos para la gráfica de pastel
   const COLORES = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF1975', '#00E5FF'];
 
   useEffect(() => {
-    // 1. Obtener los libros de tu API en el puerto HTTP 5224
     const cargarDatos = async () => {
       try {
         const response = await fetch('http://localhost:5224/api/Libros');
@@ -24,30 +22,23 @@ function ReportesGraficas({ usuarioLogueado }) {
           setLibros(listaLibros);
           
           if (listaLibros.length > 0) {
-            setLibroSeleccionado(listaLibros[0].id.toString()); // Seleccionar el primero por defecto
+            setLibroSeleccionado(listaLibros[0].id.toString()); 
           }
 
-          // 2. Procesar datos para la Gráfica de Pastel (Conteo por Categoría)
           const conteoCategorias = {};
           listaLibros.forEach(libro => {
             const cat = libro.categoria || 'Sin Categoría';
             conteoCategorias[cat] = (conteoCategorias[cat] || 0) + 1;
           });
 
-          // Convertimos el objeto de conteos en un arreglo inicial de objetos
           const formatearPastel = Object.keys(conteoCategorias).map(cat => ({
             name: cat,
             value: conteoCategorias[cat]
           }));
 
-          // 🔥 NUEVO CAMBIO: Filtrado para mostrar solo las 5 categorías con más libros
-          // .sort((a, b) => b.value - a.value) ordena el arreglo de mayor a menor cantidad
-          // .slice(0, 5) toma únicamente los primeros 5 elementos de la lista ordenada
           const top5Categorias = formatearPastel
             .sort((a, b) => b.value - a.value)
             .slice(0, 5);
-
-          // Guardamos las 5 mejores categorías filtradas en el estado de la gráfica
           setDatosPastel(top5Categorias);
         }
       } catch (error) {
@@ -58,11 +49,9 @@ function ReportesGraficas({ usuarioLogueado }) {
     cargarDatos();
   }, []);
 
-// 3. Simular o cargar el historial de tiempo cada vez que cambie el libro seleccionado
   useEffect(() => {
     if (!libroSeleccionado) return;
-    
-    // Generamos datos aleatorios lógicos basados en el ID del libro para que cambie la gráfica
+
     const factor = parseInt(libroSeleccionado) % 3;
     
     const historialSimulado = [
@@ -70,13 +59,12 @@ function ReportesGraficas({ usuarioLogueado }) {
       { mes: 'Feb', solicitudes: 5 * (factor + 1) },
       { mes: 'Mar', solicitudes: 12 - factor },
       { mes: 'Abr', solicitudes: 8 + factor * 2 },
-      { mes: 'May', solicitudes: 18 + factor } // Pico más alto de solicitudes por fin de semestre en el ITSUR
+      { mes: 'May', solicitudes: 18 + factor } 
     ];
 
     setDatosLineas(historialSimulado);
   }, [libroSeleccionado]);
 
-  // 4. Función para exportar toda la vista a PDF
   const exportarPDF = () => {
     const elemento = reporteRef.current;
     
@@ -87,7 +75,7 @@ function ReportesGraficas({ usuarioLogueado }) {
       const altoPdf = (canvas.height * anchoPdf) / canvas.width;
       
       pdf.addImage(imgData, 'PNG', 0, 0, anchoPdf, altoPdf);
-      pdf.save(`Reporte_BiblioPlus_${new Date().toLocaleDateString()}.pdf`);
+      pdf.save(`Reporte_Inventario_BiblioPlus_${new Date().toLocaleDateString()}.pdf`);
     });
   };
 
@@ -98,7 +86,7 @@ function ReportesGraficas({ usuarioLogueado }) {
           <p className="kicker">Módulo de Estadísticas</p>
           <h1>Reportes Gráficos</h1>
           <p className="pageText">
-            Visualiza el rendimiento de la biblioteca. Analiza las categorías más populares y el historial de demanda por título.
+            Visualiza el rendimiento de la biblioteca. Analiza las categorías más populares, el historial de demanda y los niveles de inventario físico.
           </p>
         </div>
         <button className="btn primary" onClick={exportarPDF}>
@@ -106,14 +94,12 @@ function ReportesGraficas({ usuarioLogueado }) {
         </button>
       </header>
 
-      {/* Contenedor que será capturado en el PDF */}
-      <div ref={reporteRef} className="reporte-container">
+      <div ref={reporteRef} className="reporte-container" style={{ padding: '10px' }}>
+
         <div className="dashboard-grid">
           
-          {/* GRÁFICA 1: PASTEL - CATEGORÍAS */}
           <section className="admin-card grafica-box">
             <div className="cardTitle">
-              {/* Ajustamos el título para dejar claro que solo muestra las más populares */}
               <h2>Top 5 Categorías más Populares</h2>
             </div>
             <div className="canvas-wrap">
@@ -139,13 +125,11 @@ function ReportesGraficas({ usuarioLogueado }) {
             </div>
           </section>
 
-          {/* GRÁFICA 2: ÁREA/LÍNEAS - PERIODOS POR LIBRO */}
           <section className="admin-card grafica-box">
             <div className="cardTitle d-flex justify-content-between align-items-center flex-wrap gap-2">
               <div>
                 <h2>Demanda Temporal del Libro</h2>
               </div>
-              {/* SELECTOR DINÁMICO */}
               <div className="field m-0" style={{ minWidth: '220px' }}>
                 <select 
                   value={libroSeleccionado} 
@@ -178,8 +162,52 @@ function ReportesGraficas({ usuarioLogueado }) {
               </ResponsiveContainer>
             </div>
           </section>
-
         </div>
+
+        <section className="admin-card" style={{ marginTop: '24px' }}>
+          <div className="cardTitle">
+            <h2>Reporte de Disponibilidad e Inventario Físico</h2>
+            <span className="hint">Muestra el total de piezas registradas en el catálogo de la biblioteca.</span>
+          </div>
+
+          <div className="tableWrap">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Título del Libro</th>
+                  <th>Autor</th>
+                  <th>Categoría</th>
+                  <th>ISBN</th>
+                  <th style={{ textAlign: 'center' }}>Ejemplares Totales</th>
+                </tr>
+              </thead>
+              <tbody>
+                {libros.length > 0 ? (
+                  libros.map((libro) => (
+                    <tr key={libro.id}>
+                      <td>{libro.id}</td>
+                      <td><strong>{libro.titulo}</strong></td>
+                      <td>{libro.autor}</td>
+                      <td>{libro.categoria || '—'}</td>
+                      <td>{libro.isbn || '—'}</td>
+                      <td style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                        {libro.ejemplares} pzas.
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="emptyRow">
+                      No hay registros disponibles para generar la tabla de auditoría.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
       </div>
     </main>
   );

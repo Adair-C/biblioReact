@@ -17,11 +17,14 @@
   z-index: 1;
   color: #ffffff;
   position: relative;
+  align-content: center;
+
 }
 
 .banner-content h1 {
   font-family: 'Playfair Display', serif;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6);
+  justify-items: center;
 }
 
 .banner-text {

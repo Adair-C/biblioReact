@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import ModalNotificacion from '../../components/ModalNotificacion/ModalNotificacion';
 import './AdminLibros.css';
 
-function AdminLibros({ usuarioLogueado, alCerrarSesion }) {
+function AdminLibros({ usuarioLogueado}) {
   const [libros, setLibros] = useState([]);
   const [busqueda, setBusqueda] = useState('');
-  const [idLibroAEliminar, setIdLibroAEliminar] = useState(null); // 🔥 Guarda temporalmente el ID a borrar
+  const [idLibroAEliminar, setIdLibroAEliminar] = useState(null); 
   
   // Estado básico para el contenido del modal
   const [modal, setModal] = useState({
@@ -39,7 +39,6 @@ function AdminLibros({ usuarioLogueado, alCerrarSesion }) {
     "Policial", "Biografía", "Historia"
   ];
 
-  // Obtener libros desde la API C# (Cambiado a Puerto 5224)
   const obtenerLibros = async () => {
     try {
       const url = busqueda.trim() 
@@ -256,7 +255,6 @@ function AdminLibros({ usuarioLogueado, alCerrarSesion }) {
           </form>
         </section>
 
-        {/* LISTADO DE LIBROS */}
         <section className="admin-card">
           <div className="cardTitle d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div>
