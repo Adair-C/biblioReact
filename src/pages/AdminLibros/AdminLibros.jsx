@@ -7,7 +7,6 @@ function AdminLibros({ usuarioLogueado}) {
   const [busqueda, setBusqueda] = useState('');
   const [idLibroAEliminar, setIdLibroAEliminar] = useState(null); 
   
-  // Estado básico para el contenido del modal
   const [modal, setModal] = useState({
     mostrar: false,
     tipo: 'success',
@@ -69,7 +68,6 @@ function AdminLibros({ usuarioLogueado}) {
     });
   };
 
-  // Guardar o Editar un libro (Cambiado a Puerto 5224)
   const manejarGuardar = async (e) => {
     e.preventDefault();
     const url = editando ? `http://localhost:5224/api/Libros/${form.id}` : 'http://localhost:5224/api/Libros';
@@ -88,7 +86,6 @@ function AdminLibros({ usuarioLogueado}) {
         cancelarEdicion();
         await obtenerLibros();
 
-        // Lanzar modal de éxito (Verde)
         setModal({
           mostrar: true,
           tipo: 'success',
@@ -101,9 +98,8 @@ function AdminLibros({ usuarioLogueado}) {
     }
   };
 
-  // Primer paso de borrado: Muestra confirmación (Modal Rojo)
   const manejarEliminar = (id) => {
-    setIdLibroAEliminar(id); // Almacena el ID de manera síncrona y segura
+    setIdLibroAEliminar(id); 
     setModal({
       mostrar: true,
       tipo: 'danger-confirm',
@@ -112,7 +108,6 @@ function AdminLibros({ usuarioLogueado}) {
     });
   };
 
-  // Segundo paso de borrado: Petición DELETE (Cambiado a Puerto 5224)
   const confirmarEliminacion = async () => {
     if (!idLibroAEliminar) return;
 
@@ -122,12 +117,11 @@ function AdminLibros({ usuarioLogueado}) {
       });
 
       if (response.ok) {
-        await obtenerLibros(); // Refresca la tabla reactivamente
+        await obtenerLibros(); 
         if (form.id === idLibroAEliminar) cancelarEdicion();
         
         setIdLibroAEliminar(null);
 
-        // Transiciona de inmediato al modal de éxito (Verde)
         setModal({
           mostrar: true,
           tipo: 'success',
@@ -140,7 +134,6 @@ function AdminLibros({ usuarioLogueado}) {
     }
   };
 
-  // Función común para cerrar modales e invalidar selecciones temporales
   const cerrarModal = () => {
     setModal(prev => ({ ...prev, mostrar: false }));
     setIdLibroAEliminar(null);

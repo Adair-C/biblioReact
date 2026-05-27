@@ -25,7 +25,7 @@ function Navbar({ usuarioLogueado, alCerrarSesion }) {
 
         <div className="nav-right">
           <div className="user-info">
-            <span className="user-name">{usuarioLogueado?.nombre || 'Usuario'}</span>
+            <span ><NavLink to="/perfil" className="user-name">{usuarioLogueado?.nombre || 'Usuario'}</NavLink></span>
           </div>
           <button className="btn-logout" onClick={alCerrarSesion}>
             Cerrar sesión

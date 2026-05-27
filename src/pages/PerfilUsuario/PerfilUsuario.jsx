@@ -3,7 +3,7 @@ import './PerfilUsuario.css';
 
 const PerfilUsuario = ({ usuarioLogueado }) => {
   const [libros, setLibros] = useState([]);
-  const [cargando, setCargando] = useState(true); // <--- IMPORTANTE: Agregado
+  const [cargando, setCargando] = useState(true);
   
   const { nombre, username, correo, rol, noControl, escuela } = usuarioLogueado;
   
@@ -40,34 +40,17 @@ const PerfilUsuario = ({ usuarioLogueado }) => {
     <main className="profile-page">
       <div className="container py-4 py-sm-5">
         <div className="row g-4">
-          {/* ASIDE */}
+          
           <div className="col-12 col-lg-3">
             <aside className="profile-sidebar">
-              <div className="sidebar-user">
-                <div className="sidebar-avatar">{nombre?.charAt(0).toUpperCase()}</div>
-                <h2 className="sidebar-name">{nombre}</h2>
-                <p className="sidebar-username">@{username}</p>
-                <span className="role-badge">{rol.charAt(0).toUpperCase() + rol.slice(1)}</span>
-              </div>
-              
-              <nav className="sidebar-menu">
-                <a href="/perfil" className="sidebar-link active">Mi perfil</a>
-                {(esMaestro || esAdmin) && <a href="/prestamos" className="sidebar-link">Gestionar Préstamos</a>}
-                {(esMaestro || esAdmin) && <a href="/libros" className="sidebar-link">Gestionar libros</a>}
-                {(esMaestro || esAdmin) && <a href="/reportes" className="sidebar-link">Gestionar Reportes</a>}
-                <a href="/logout" className="sidebar-link logout-link">Cerrar sesión</a>
-              </nav>
-            </aside>
-          </div>
-
-          {/* CONTENIDO PRINCIPAL */}
-          <div className="col-12 col-lg-9">
-            <section className="profile-card mb-4">
+              <section className="profile-card mb-4">
               <div className="profile-header">
                 <div className="profile-avatar">{nombre?.charAt(0).toUpperCase()}</div>
                 <div className="profile-main-info">
-                  <p className="profile-kicker mb-2">Tu espacio personal</p>
+                  <p className="profile-kicker mb-2">Tu espacio personal</p>                  
                   <h1 className="profile-title mb-2">{nombre}</h1>
+                  <p className="sidebar-username">@{username}</p>
+                  <span className="role-badge">{rol.charAt(0).toUpperCase() + rol.slice(1)}</span>
                 </div>
               </div>
 
@@ -94,8 +77,19 @@ const PerfilUsuario = ({ usuarioLogueado }) => {
                 )}
               </div>
             </section>
+              
+              <nav className="sidebar-menu">
+                <a href="/perfil" className="sidebar-link active">Mi perfil</a>
+                {(esMaestro || esAdmin) && <a href="/prestamos" className="sidebar-link">Gestionar Préstamos</a>}
+                {(esMaestro || esAdmin) && <a href="/libros" className="sidebar-link">Gestionar libros</a>}
+                {(esMaestro || esAdmin) && <a href="/reportes" className="sidebar-link">Gestionar Reportes</a>}
+                <a href="/logout" className="sidebar-link logout-link">Cerrar sesión</a>
+              </nav>
+            </aside>
+          </div>
 
-            {/* SECCIÓN LIBROS (Visible solo para Maestro/Admin) */}
+          <div className="col-12 col-lg-9">
+
             {(esMaestro || esAdmin) && (
               <section className="mt-4">
                 <h2 className="mb-3">Ultimos libros registrados en sistema</h2>

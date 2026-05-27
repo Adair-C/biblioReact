@@ -1,6 +1,9 @@
 import './principal.css';
 import CategoriaItem from '../../components/Cprincipal/CategoriaItem';
 
+import thrillerImg from '../../assets/principal/thriller.jpg';
+import historicaImg from '../../assets/principal/historica.jpg';
+
 function Principal({ usuarioLogueado }) {
   const estaLogueado = !!usuarioLogueado;
 
@@ -35,8 +38,8 @@ function Principal({ usuarioLogueado }) {
           </div>
 
           <div className="row g-4">
-            <CategoriaItem titulo="Novela negra, thriller o suspense." img="../../assets/principal/thriller.jpg" />
-            <CategoriaItem titulo="Novela histórica." img="historica.jpg" />
+            <CategoriaItem titulo="Novela negra, thriller o suspense." img={thrillerImg} />
+            <CategoriaItem titulo="Novela histórica." img={historicaImg} />
           </div>
         </div>
       </section>

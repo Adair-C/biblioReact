@@ -6,7 +6,6 @@ function AdminPrestamos({ usuarioLogueado }) {
   const [formPrestamo, setFormPrestamo] = useState({ usuarioId: '', libroId: '' });
   const [idDevolucion, setIdDevolucion] = useState('');
   
-  // 🔥 NUEVO: Estado para guardar la lista de préstamos de la tabla
   const [prestamos, setPrestamos] = useState([]);
 
   const [modal, setModal] = useState({
@@ -16,7 +15,6 @@ function AdminPrestamos({ usuarioLogueado }) {
     mensaje: ''
   });
 
-  // 🔥 NUEVO: Función para traer los préstamos de MySQL
   const obtenerPrestamos = async () => {
     try {
       const response = await fetch('http://localhost:5224/api/Prestamos');
@@ -29,7 +27,6 @@ function AdminPrestamos({ usuarioLogueado }) {
     }
   };
 
-  // Se ejecuta automáticamente al abrir la página
   useEffect(() => {
     obtenerPrestamos();
   }, []);
@@ -56,7 +53,7 @@ function AdminPrestamos({ usuarioLogueado }) {
           mensaje: data.mensaje
         });
         setFormPrestamo({ usuarioId: '', libroId: '' }); 
-        obtenerPrestamos(); // 🔥 Recargamos la tabla al prestar
+        obtenerPrestamos(); 
       } else {
         setModal({
           mostrar: true,
@@ -89,7 +86,7 @@ function AdminPrestamos({ usuarioLogueado }) {
           mensaje: data.mensaje
         });
         setIdDevolucion(''); 
-        obtenerPrestamos(); // 🔥 Recargamos la tabla al devolver
+        obtenerPrestamos(); 
       } else {
         setModal({
           mostrar: true,
@@ -105,7 +102,6 @@ function AdminPrestamos({ usuarioLogueado }) {
 
   const cerrarModal = () => setModal(prev => ({ ...prev, mostrar: false }));
 
-  // Formatear la fecha para que se vea bonita en la tabla
   const formatearFecha = (fechaString) => {
     if (!fechaString) return '—';
     const opciones = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -129,7 +125,6 @@ function AdminPrestamos({ usuarioLogueado }) {
           </div>
         </header>
 
-        {/* Zona de Formularios (Lado a Lado usando Grid) */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '30px' }}>
           
           <section className="admin-card m-0">
@@ -170,7 +165,6 @@ function AdminPrestamos({ usuarioLogueado }) {
 
         </div>
 
-        {/* 🔥 NUEVO: SECCIÓN DE LA TABLA */}
         <section className="admin-card">
           <div className="cardTitle">
             <h2>Historial de Préstamos</h2>
