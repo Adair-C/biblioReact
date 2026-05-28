@@ -3,6 +3,11 @@ import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend, AreaChart, A
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import './ReportesGraficas.css';
+import BotonTabla from '../../components/reportes/BotonTabla';
+import TablaDisponibilidad from '../../components/reportes/TablaDisponibilidad';
+import TablaMorosidad from '../../components/reportes/TablaMorosidad';
+import TablaLibrosRotacion from '../../components/reportes/TablaLibrosRotacion';
+import TablaDemandaPerfil from '../../components/reportes/TablaDemandaPerfil';
 
 function ReportesGraficas({ usuarioLogueado }) {
   const [libros, setLibros] = useState([]);
@@ -10,6 +15,7 @@ function ReportesGraficas({ usuarioLogueado }) {
   const [datosPastel, setDatosPastel] = useState([]);
   const [datosLineas, setDatosLineas] = useState([]);
   const reporteRef = useRef();
+  const [tablaActiva, setTablaActiva] = useState(null);
 
   const COLORES = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF1975', '#00E5FF'];
 
@@ -166,48 +172,54 @@ function ReportesGraficas({ usuarioLogueado }) {
 
         <section className="admin-card" style={{ marginTop: '24px' }}>
           <div className="cardTitle">
-            <h2>Reporte de Disponibilidad e Inventario Físico</h2>
-            <span className="hint">Muestra el total de piezas registradas en el catálogo de la biblioteca.</span>
-          </div>
+             <div>
+                <BotonTabla
+                  active={tablaActiva === 'disponibilidad'}
+                  onClick={() => setTablaActiva('disponibilidad')}
+                >
+                  DISPONIBILIDAD
+                </BotonTabla>
 
-          <div className="tableWrap">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Título del Libro</th>
-                  <th>Autor</th>
-                  <th>Categoría</th>
-                  <th>ISBN</th>
-                  <th style={{ textAlign: 'center' }}>Ejemplares Totales</th>
-                </tr>
-              </thead>
-              <tbody>
-                {libros.length > 0 ? (
-                  libros.map((libro) => (
-                    <tr key={libro.id}>
-                      <td>{libro.id}</td>
-                      <td><strong>{libro.titulo}</strong></td>
-                      <td>{libro.autor}</td>
-                      <td>{libro.categoria || '—'}</td>
-                      <td>{libro.isbn || '—'}</td>
-                      <td style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                        {libro.ejemplares} pzas.
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="6" className="emptyRow">
-                      No hay registros disponibles para generar la tabla de auditoría.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                <BotonTabla
+                  active={tablaActiva === 'morosidad'}
+                  onClick={() => setTablaActiva('morosidad')}
+                >
+                  MOROSIDAD
+                </BotonTabla>
+
+                <BotonTabla
+                  active={tablaActiva === 'rotacion'}
+                  onClick={() => setTablaActiva('rotacion')}
+                >
+                  LIBROS FANTASMA / ROTACIÓN
+                </BotonTabla>
+
+                <BotonTabla
+                  active={tablaActiva === 'demanda'}
+                  onClick={() => setTablaActiva('demanda')}
+                >
+                  DEMANDA POR PERFIL
+                </BotonTabla>
+              </div>
+            <h2>Reportes de Biblioteca</h2>
+            <span className="hint">Selecciona un reporte para visualizar su tabla correspondiente.</span>
           </div>
+            {tablaActiva === 'disponibilidad' && (
+              <TablaDisponibilidad libros={libros} />
+            )}
+
+            {tablaActiva === 'morosidad' && (
+              <TablaMorosidad />
+            )}
+
+            {tablaActiva === 'rotacion' && (
+              <TablaLibrosRotacion />
+            )}
+
+            {tablaActiva === 'demanda' && (
+              <TablaDemandaPerfil />
+            )}
         </section>
-
       </div>
     </main>
   );

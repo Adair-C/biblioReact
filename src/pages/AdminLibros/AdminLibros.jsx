@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ModalNotificacion from '../../components/ModalNotificacion/ModalNotificacion';
 import './AdminLibros.css';
 
-function AdminLibros({ usuarioLogueado}) {
+function AdminLibros({ usuarioLogueado }) {
   const [libros, setLibros] = useState([]);
   const [busqueda, setBusqueda] = useState('');
   const [idLibroAEliminar, setIdLibroAEliminar] = useState(null); 
@@ -40,11 +40,7 @@ function AdminLibros({ usuarioLogueado}) {
 
   const obtenerLibros = async () => {
     try {
-      const url = busqueda.trim() 
-        ? `http://localhost:5224/api/Libros/buscar?q=${encodeURIComponent(busqueda.trim())}`
-        : 'http://localhost:5224/api/Libros';
-        
-      const response = await fetch(url);
+      const response = await fetch('http://localhost:5224/api/Libros');
       if (response.ok) {
         const datos = await response.json();
         setLibros(datos);
@@ -56,14 +52,14 @@ function AdminLibros({ usuarioLogueado}) {
 
   useEffect(() => {
     obtenerLibros();
-  }, [busqueda]);
+  }, []);
 
   const manejarCambioInput = (e) => {
     const { name, value } = e.target;
     setForm({
       ...form,
       [name]: name === 'ejemplares' || name === 'paginas' || name === 'anioPublicacion' 
-        ? (value ? parseInt(value) : '') 
+        ? (value === '' ? '' : parseInt(value)) 
         : value
     });
   };
@@ -73,11 +69,20 @@ function AdminLibros({ usuarioLogueado}) {
     const url = editando ? `http://localhost:5224/api/Libros/${form.id}` : 'http://localhost:5224/api/Libros';
     const metodo = editando ? 'PUT' : 'POST';
 
+    let cuerpoPeticion = { ...form };
+
+    if (!editando) {
+      delete cuerpoPeticion.id;
+    }
+
+    if (cuerpoPeticion.anioPublicacion === '') cuerpoPeticion.anioPublicacion = null;
+    if (cuerpoPeticion.paginas === '') cuerpoPeticion.paginas = null;
+
     try {
       const response = await fetch(url, {
         method: metodo,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
+        body: JSON.stringify(cuerpoPeticion)
       });
 
       if (response.ok) {
@@ -92,9 +97,12 @@ function AdminLibros({ usuarioLogueado}) {
           titulo: '¡Operación Exitosa!',
           mensaje: textoModal
         });
+      } else {
+        const errorDatos = await response.json();
+        console.error("Error de validación en el Back-end:", errorDatos);
       }
     } catch (error) {
-      console.error("Error al guardar:", error);
+      console.error("Error de red al guardar:", error);
     }
   };
 
@@ -163,6 +171,18 @@ function AdminLibros({ usuarioLogueado}) {
     setEditando(false);
   };
 
+  const librosFiltrados = libros.filter((libro) => {
+    const termino = busqueda.toLowerCase().trim();
+    if (!termino) return true; 
+
+    return (
+      libro.titulo?.toLowerCase().includes(termino) ||
+      libro.autor?.toLowerCase().includes(termino) ||
+      libro.categoria?.toLowerCase().includes(termino) ||
+      libro.isbn?.toLowerCase().includes(termino)
+    );
+  });
+
   return (
     <>
       <main className="page">
@@ -182,7 +202,6 @@ function AdminLibros({ usuarioLogueado}) {
           </div>
         </header>
 
-        {/* FORMULARIO CRUD */}
         <section className="admin-card">
           <div className="cardTitle">
             <h2>{editando ? 'Editar libro' : 'Registrar nuevo libro'}</h2>
@@ -252,10 +271,10 @@ function AdminLibros({ usuarioLogueado}) {
           <div className="cardTitle d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div>
               <h2>Listado de libros</h2>
-              <span className="hint">Hay {libros.length} registro(s).</span>
+              <span className="hint">Hay {librosFiltrados.length} resultado(s) de {libros.length} en total.</span>
             </div>
             <div className="field m-0" style={{ minWidth: '250px' }}>
-              <input type="text" placeholder="🔍 Buscar..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)} />
+              <input type="text" placeholder="Buscar por título, autor..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)} />
             </div>
           </div>
 
@@ -267,8 +286,8 @@ function AdminLibros({ usuarioLogueado}) {
                 </tr>
               </thead>
               <tbody>
-                {libros.length > 0 ? (
-                  libros.map((libro) => (
+                {librosFiltrados.length > 0 ? (
+                  librosFiltrados.map((libro) => (
                     <tr key={libro.id}>
                       <td>{libro.id}</td>
                       <td><strong>{libro.titulo}</strong></td>
@@ -288,7 +307,7 @@ function AdminLibros({ usuarioLogueado}) {
                     </tr>
                   ))
                 ) : (
-                  <tr><td colSpan="8" className="emptyRow">No hay libros disponibles.</td></tr>
+                  <tr><td colSpan="8" className="emptyRow">No se encontraron libros que coincidan con la búsqueda.</td></tr>
                 )}
               </tbody>
             </table>
